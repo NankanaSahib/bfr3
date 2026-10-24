@@ -1,0 +1,6 @@
+{
+  "name": "BFR",
+  "description": "A professional legal drafting assistant for Punjab trial courts that automatically generates court evidence (PW) statements for liquor recovery cases under Section 3/4 from uploaded Urdu FIRs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

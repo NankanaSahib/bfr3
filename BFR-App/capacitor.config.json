@@ -1,0 +1,12 @@
+{
+  "appId": "com.bfr.caseassistant",
+  "appName": "BFR Case Assistant",
+  "webDir": "dist-android",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#f8fafc",
+    "adjustMarginsForEdgeToEdge": "force"
+  }
+}
