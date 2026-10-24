@@ -11,6 +11,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Locate project folder
+        run: |
+          FILE=$(find . -maxdepth 3 -name package.json -not -path '*/node_modules/*' | head -n 1)
+          if [ -z "$FILE" ]; then
+            echo "package.json was not found. Files in the repository:"
+            find . -maxdepth 3 -not -path './.git/*' | head -n 80
+            exit 1
+          fi
+          DIR=$(dirname "$FILE")
+          echo "Project folder: $DIR"
+          echo "PROJECT_DIR=$DIR" >> "$GITHUB_ENV"
+
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -24,12 +36,14 @@ jobs:
         run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
 
       - name: Install dependencies
+        working-directory: ${{ env.PROJECT_DIR }}
         run: npm install --no-audit --no-fund
 
       - name: Build APK
+        working-directory: ${{ env.PROJECT_DIR }}
         run: npm run android:apk
 
       - uses: actions/upload-artifact@v7
         with:
           name: BFR-Case-Assistant-APK
-          path: release-android/BFR-Case-Assistant.apk
+          path: ${{ env.PROJECT_DIR }}/release-android/BFR-Case-Assistant.apk
